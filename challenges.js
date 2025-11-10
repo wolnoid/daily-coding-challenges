@@ -465,8 +465,12 @@ fromPairs([ ['name', 'Sam"], ['age', 24], ['name', 'Sally'] ])
 // Your solution for 14-fromPairs here:
 
 
-function fromPairs () {
-  
+function fromPairs (nestedArrays) {
+  const newObject = {}
+  nestedArrays.forEach((list) => {
+    newObject[list[0]] = list[1]
+  })
+  return newObject
 }
 
 
@@ -498,7 +502,14 @@ mergeObjects({a: 1, b: 2, c: 3}, {d: 4}, {b: 22, d: 44})
 // Your solution for 15-mergeObjects here:
 
 
-
+function mergeObjects (...objects) {
+  for (let object of objects) {
+    for (let key in object) {
+      objects[0][key] = object[key]
+    }
+  }
+  return objects[0]
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -540,7 +551,21 @@ findHighestPriced([
 // Your solution for 16-findHighestPriced here:
 
 
-
+function findHighestPriced (array) {
+  let highestPrice = 0
+  let highestPriceObject = undefined
+  for (let object of array) {
+    for (let key in object) {
+      if (key === 'price') {
+        if (object['price'] > highestPrice) {
+          highestPrice = object['price']
+          highestPriceObject = object
+        }
+      }
+    }
+  } 
+  return highestPriceObject
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -578,7 +603,14 @@ mapArray( ['rose', 'tulip', 'daisy'], function(f, i) {
 // Your solution for 17-mapArray here:
 
 
-
+function mapArray (array, callbackFunction) {
+  let newArray = []
+  array.forEach((element, index) => {
+    let returnedValue = callbackFunction(element, index)
+    newArray.push(returnedValue)
+  })
+  return newArray
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -629,7 +661,13 @@ reduceArray( ['Yes', 'No', 'Yes', 'Maybe'], function(acc, v) {
 // Your solution for 18-reduceArray here:
 
 
-
+function reduceArray (array, callbackFunction, initialValue) {
+  let accumulator = initialValue
+  array.forEach((element, index) => {
+      accumulator = callbackFunction(accumulator, element, index)
+  })
+  return accumulator
+  }
 
 
 /*-----------------------------------------------------------------------------
@@ -658,7 +696,14 @@ flatten( [1, [2, [3, [4]]], 1, 'a', ['b', 'c']] );
 // Your solution for 19-flatten here:
 
 
-
+function flatten (array) {
+  let newArray = []
+  let accumulator = initialValue
+  array.forEach((element, index) => {
+      accumulator = callbackFunction(accumulator, element, index)
+  })
+  return newArray
+  }
 
 
 /*-----------------------------------------------------------------------------
