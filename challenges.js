@@ -697,12 +697,10 @@ flatten( [1, [2, [3, [4]]], 1, 'a', ['b', 'c']] );
 
 
 function flatten (array) {
-  let newArray = []
-  let accumulator = initialValue
-  array.forEach((element, index) => {
-      accumulator = callbackFunction(accumulator, element, index)
-  })
-  return newArray
+  while (array.some(element => Array.isArray(element))) {
+    array = array.flat()
+  }
+  return array
   }
 
 
@@ -739,6 +737,15 @@ Hint: Code a nested isPrime(n) helper function that returns true if n is prime, 
 
 
 
+function primeFactors(num) {
+
+
+
+
+  return primeArray
+}
+
+
 
 
 /*-----------------------------------------------------------------------------
@@ -765,7 +772,16 @@ isPrime(200) //=> false
 // Your solution for 21-isPrime here:
 
 
-
+function isPrime(num) {
+  if (num % 1 !== 0) return false
+  if (num <= 1) return false
+  if (num === 2) return true
+  if (num % 2 === 0) return false
+  for (let i = 3; i <= Math.sqrt(num); i += 2) {
+    if (num % i === 0) return false
+  }
+  return true
+}
 
 
 /*-----------------------------------------------------------------------------
