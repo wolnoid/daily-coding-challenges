@@ -736,17 +736,31 @@ Hint: Code a nested isPrime(n) helper function that returns true if n is prime, 
 // Your solution for 20-primeFactors here:
 
 
-
 function primeFactors(num) {
 
+  function isPrime(num) {
+    if (num % 1 !== 0) return false
+    if (num <= 1) return false
+    if (num === 2) return true
+    if (num % 2 === 0) return false
+    for (let i = 3; i <= Math.sqrt(num); i += 2) {
+      if (num % i === 0) return false
+    }
+    return true
+  }
 
-
-
-  return primeArray
+  let factorsArray = []
+  if (num % 1 === 0 && num > 1) {
+    for (let i = 2; i <= num; i++) {
+      while (isPrime(i) && num % i === 0) {
+        factorsArray.push(i)
+        num = num / i
+      }
+    }
+  }
+  return factorsArray
 }
-
-
-
+  
 
 /*-----------------------------------------------------------------------------
 Challenge: 21-isPrime
