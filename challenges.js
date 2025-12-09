@@ -555,13 +555,9 @@ function findHighestPriced (array) {
   let highestPrice = 0
   let highestPriceObject = undefined
   for (let object of array) {
-    for (let key in object) {
-      if (key === 'price') {
-        if (object['price'] > highestPrice) {
-          highestPrice = object['price']
-          highestPriceObject = object
-        }
-      }
+    if (object['price'] > highestPrice) {
+      highestPrice = object['price']
+      highestPriceObject = object
     }
   } 
   return highestPriceObject
