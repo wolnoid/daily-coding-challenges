@@ -13,11 +13,9 @@ sayHello() //=> Hello!
 -----------------------------------------------------------------------------*/
 // Your solution for 00-sayHello (example) here:
 
-
 function sayHello() {
-  return 'Hello!'
+  return "Hello!";
 }
-
 
 /*-----------------------------------------------------------------------------
 Challenge: 01-addOne
@@ -37,9 +35,7 @@ addOne(-5) //=> -4
 // Your solution for 01-addOne here:
 
 
-function addOne(num) {
-  return num + 1
-}
+const addOne = num => num += 1
 
 
 /*-----------------------------------------------------------------------------
@@ -63,10 +59,9 @@ addTwoNumbers('Hello', 5) //=> NaN
 // Your solution for 02-addTwoNumbers here:
 
 
-function addTwoNumbers(num1, num2) {
-  if (typeof num1 !== 'number' || typeof num2 !== 'number') return NaN
-  return (num1 + num2)
-}
+function addTwoNumbers (num1, num2) {
+  return typeof num1 === 'number' && typeof num2 === 'number' ? num1 + num2 : NaN
+  }
 
 
 /*-----------------------------------------------------------------------------
@@ -90,10 +85,10 @@ sumNumbers([]) //=> 0
 // Your solution for 03-sumNumbers here:
 
 
-function sumNumbers(numArray) {
+function sumNumbers (numberArray) {
   let sum = 0
-  for (let i of numArray) {
-    sum += i
+  for (let number of numberArray) {
+    sum += number
   }
   return sum
 }
@@ -120,11 +115,11 @@ addList(7,-12) //=> -5
 // Your solution for 04-addList here:
 
 
-function addList(...numArray) {
+function addList (...numberArray) {
   let sum = 0
-  for (let i of numArray) {
-    sum += i
-  }
+  numberArray.forEach((number) => {
+    sum += number
+  })
   return sum
 }
 
@@ -153,24 +148,11 @@ computeRemainder(10.5, 3) //=> 1.5
 // Your solution for 05-computeRemainder here:
 
 
-// function computeRemainder(num1, num2) {
-//   if (num2 == 0) return Infinity
-//   let remainder = num1 % num2
-//   return remainder
-// }
-
-
-function computeRemainder(num1, num2) {
-  if (num2 == 0) return Infinity
-  let w = num1 / num2
-  let x = w.toString()
-  let y = x.split('.')
-  if (y[1]) {
-    let z = Number(`0.${y[1]}`)
-    let a = z * num2
-    return a
-  }
-  return 0
+function computeRemainder (dividend, divisor) {
+  if (divisor === 0) return Infinity
+  let roundedQuotient = Math.round(dividend/divisor)
+  let modulo = dividend - (roundedQuotient*divisor)
+  return modulo > 0 ? modulo : modulo *= -1
 }
 
 
@@ -198,12 +180,13 @@ range(5,2) //=> "First argument must be less than second"
 // Your solution for 06-range here:
 
 
-function range(i1, i2) {
-  if (i1 > i2) return "First argument must be less than second"
-  let array = []
-  for (let i = i1; i < i2; i++)
-    array.push(i)
-  return array
+function range (int1, int2) {
+  if (int1 > int2) return "First argument must be less than second"
+  list = []
+  for (let i = int1; i < int2; i++) {
+      list.push(i)
+  }
+  return list
 }
 
 
@@ -226,15 +209,13 @@ reverseUpcaseString("SEI Rocks!") //=> "!SKCOR IES"
 // Your solution for 07-reverseUpcaseString here:
 
 
-function reverseUpcaseString(string) {
+function reverseUpcaseString (string) {
   let newString = ''
-  for (let i = string.length - 1; i >= 0; i--) {
-    newString += string[i]
+  for (let i = string.length-1; i>=0; i--) {
+      newString += string[i].toUpperCase()
   }
-  return newString.toUpperCase()
+  return newString
 }
-
-console.log(reverseUpcaseString("SEI Rocks!"))
 
 
 /*-----------------------------------------------------------------------------
@@ -256,6 +237,13 @@ removeEnds('a') //=> "" (empty string)
 // Your solution for 08-removeEnds here:
 
 
+function removeEnds (string) {
+  let newString = ''
+  for (let i = 1; i<string.length-1; i++) {
+    newString += string[i]
+  }
+  return newString
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -297,7 +285,14 @@ charCount('Today is fantastic!')
 // Your solution for 09-charCount here:
 
 
-
+function charCount (string) {
+  let dictionary = {}
+  for (let i = 0; i < string.length; i++) {
+    if (dictionary[string[i]] === undefined) dictionary[string[i]] = 0
+    dictionary[string[i]] += 1
+  }
+  return dictionary
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -327,7 +322,16 @@ formatWithPadding(1234, '*', 3) //=> "1234"
 // Your solution for 10-formatWithPadding here:
 
 
-
+function formatWithPadding (numToFormat, paddingString, desiredLength) {
+  let numToFormatAsString = numToFormat.toString()
+  if (numToFormatAsString.length < desiredLength) {
+    let solution = ''
+    let numPaddingCharacters = desiredLength - numToFormatAsString.length
+    solution += paddingString.repeat(numPaddingCharacters) + numToFormatAsString
+    return solution
+  }
+  return numToFormatAsString
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -355,7 +359,14 @@ isPalindrome('') //=> true
 // Your solution for 11-isPalindrome here:
 
 
-
+function isPalindrome (string) {
+  let palindrome = ''
+  let newString = string.replace(/ /g, '')
+  for (let i = newString.length-1; i >= 0; i--) {
+    palindrome += newString[i]
+  }
+  return newString.toLowerCase() === palindrome.toLowerCase()
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -385,7 +396,14 @@ hammingDistance('abc', 'ab') //=> NaN
 // Your solution for 12-hammingDistance here:
 
 
-
+function hammingDistance (string1, string2) {
+  if (string1.length !== string2.length) return NaN
+  let differenceCount = 0
+  for (let i = 0; i < string1.length; i++) {
+    if (string1[i] !== string2[i]) differenceCount += 1
+  }
+  return differenceCount
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -412,7 +430,14 @@ mumble('!A 2') //=> '!-AA-   -2222'
 // Your solution for 13-mumble here:
 
 
-
+function mumble (string) {
+  let newString = ''
+  for (let i = 0; i < string.length; i++) {
+    newString += string[i].repeat(i+1)
+    if (i !== string.length-1) newString += '-'
+  }
+  return newString
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -440,7 +465,13 @@ fromPairs([ ['name', 'Sam"], ['age', 24], ['name', 'Sally'] ])
 // Your solution for 14-fromPairs here:
 
 
-
+function fromPairs (nestedArrays) {
+  const newObject = {}
+  nestedArrays.forEach((list) => {
+    newObject[list[0]] = list[1]
+  })
+  return newObject
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -471,7 +502,14 @@ mergeObjects({a: 1, b: 2, c: 3}, {d: 4}, {b: 22, d: 44})
 // Your solution for 15-mergeObjects here:
 
 
-
+function mergeObjects (...objects) {
+  for (let object of objects) {
+    for (let key in object) {
+      objects[0][key] = object[key]
+    }
+  }
+  return objects[0]
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -513,7 +551,17 @@ findHighestPriced([
 // Your solution for 16-findHighestPriced here:
 
 
-
+function findHighestPriced (array) {
+  let highestPrice = 0
+  let highestPriceObject = undefined
+  for (let object of array) {
+    if (object['price'] > highestPrice) {
+      highestPrice = object['price']
+      highestPriceObject = object
+    }
+  } 
+  return highestPriceObject
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -551,7 +599,14 @@ mapArray( ['rose', 'tulip', 'daisy'], function(f, i) {
 // Your solution for 17-mapArray here:
 
 
-
+function mapArray (array, callbackFunction) {
+  let newArray = []
+  array.forEach((element, index) => {
+    let returnedValue = callbackFunction(element, index)
+    newArray.push(returnedValue)
+  })
+  return newArray
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -602,7 +657,13 @@ reduceArray( ['Yes', 'No', 'Yes', 'Maybe'], function(acc, v) {
 // Your solution for 18-reduceArray here:
 
 
-
+function reduceArray (array, callbackFunction, initialValue) {
+  let accumulator = initialValue
+  array.forEach((element, index) => {
+      accumulator = callbackFunction(accumulator, element, index)
+  })
+  return accumulator
+  }
 
 
 /*-----------------------------------------------------------------------------
@@ -631,7 +692,12 @@ flatten( [1, [2, [3, [4]]], 1, 'a', ['b', 'c']] );
 // Your solution for 19-flatten here:
 
 
-
+function flatten (array) {
+  while (array.some(element => Array.isArray(element))) {
+    array = array.flat()
+  }
+  return array
+  }
 
 
 /*-----------------------------------------------------------------------------
@@ -666,7 +732,30 @@ Hint: Code a nested isPrime(n) helper function that returns true if n is prime, 
 // Your solution for 20-primeFactors here:
 
 
+function primeFactors(num) {
 
+  function isPrime(num) {
+    if (num % 1 !== 0) return false
+    if (num <= 1) return false
+    if (num === 2) return true
+    if (num % 2 === 0) return false
+    for (let i = 3; i <= Math.sqrt(num); i += 2) {
+      if (num % i === 0) return false
+    }
+    return true
+  }
+
+  let factorsArray = []
+  if (num % 1 === 0 && num > 1) {
+    for (let i = 2; i <= num; i++) {
+      while (isPrime(i) && num % i === 0) {
+        factorsArray.push(i)
+        num = num / i
+      }
+    }
+  }
+  return factorsArray
+}
   
 
 /*-----------------------------------------------------------------------------
@@ -693,7 +782,16 @@ isPrime(200) //=> false
 // Your solution for 21-isPrime here:
 
 
-
+function isPrime(num) {
+  if (num % 1 !== 0) return false
+  if (num <= 1) return false
+  if (num === 2) return true
+  if (num % 2 === 0) return false
+  for (let i = 3; i <= Math.sqrt(num); i += 2) {
+    if (num % i === 0) return false
+  }
+  return true
+}
 
 
 /*-----------------------------------------------------------------------------
