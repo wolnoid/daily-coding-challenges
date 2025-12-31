@@ -860,12 +860,17 @@ balancedBrackets( '[({}[])]' ) // => true
 function balancedBrackets(string) {
   let left = ['(', '[', '{']
   let right = [')', ']', '}']
-  for (let i in string) {
-    i
+  for (let i = 0; i < string.length; i++) {
+    if (right.includes(string[i])) {
+        let charIndex = right.indexOf(string[i])
+        if (string[i-1] !== left[charIndex]) return false
+        string = string.slice(0, i-1) + string.slice(i + 1)
+        i -= 2
+      }
   }
+  return true
 }
 
-balancedBrackets( '[(])' )
 
 /*-----------------------------------------------------------------------------
 Challenge: 24-isWinningTicket
